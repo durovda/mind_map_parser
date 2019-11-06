@@ -1,2 +1,6 @@
 .idea
 venv
+long_names.txt
+raw_lines.txt
+tree.txt
+test_cases.xml
