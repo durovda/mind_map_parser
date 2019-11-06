@@ -437,8 +437,15 @@ class TextUtils:
         return lines
 
 
-def testSuiteToXmlFile():
-    prs = TParser('mind_map.txt')
+class Config:
+
+    @staticmethod
+    def isDebug():
+        return False
+
+
+def launch_parser(mind_map_file):
+    prs = TParser(mind_map_file)
     prs.run()
     ts = prs.getTestSuite()
     lines = []
@@ -446,8 +453,8 @@ def testSuiteToXmlFile():
     TextUtils.printLinesToFile(lines, 'test_cases.xml')
 
 
-def longNamesToFile():
-    prs = TParser('mind_map.txt')
+def long_names_to_file(mind_map_file):
+    prs = TParser(mind_map_file)
     prs.run()
     ts = prs.getTestSuite()
     tks = ts.getTestCases()
@@ -463,20 +470,3 @@ def longNamesToFile():
             count += 1
     lines.append('Длинных имён: ' + str(count))
     TextUtils.printLinesToFile(lines, 'long_names.txt')
-
-
-class Config:
-
-    @staticmethod
-    def isDebug():
-        return True
-
-
-#####
-
-testSuiteToXmlFile()
-
-longNamesToFile()
-
-print('Ok')
-input('Для завершения нажмите "Enter"')

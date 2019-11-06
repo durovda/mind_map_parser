@@ -1,0 +1,1897 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite id="" name="INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Сквозной тест-кейс по функционалу битых объектов">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов</p></span>
+<p>ТК-00:	</strong>Сквозной тест-кейс</strong> по функционалу битых объектов</p>
+]]></summary>
+<preconditions><![CDATA[
+<p>В БД есть только один пользователь с ФИ 'Иванов Иван'. Объект битый</p>
+<p>Руководителю подразделения, в котором работает Иванов Иван добавлена авторизация, которая позволяет просматривать детали ошибки.</p>
+<p>Инженеру технической поддержки добавлена роль 'Просмотр информации для разработчиков', которая дает доступ к объектам репозитория и редактору XML</p>
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+<step><step_number><![CDATA[1]]></step_number>
+<actions><![CDATA[
+<p>Руководитель подразделения ищет в списке пользователя 'Иванов Иван'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>Найден один объект</p>
+<p>Строка отображается в виде плашки битого объекта. Плашка содержит...</p>
+<p style="margin-left: 40px;">иконку 'восклицательный знак'</p>
+<p style="margin-left: 40px;">текст 'Не удалось отобразить информацию о пользователе.'</p>
+<p style="margin-left: 40px;">кнопку-ссылку 'Подробнее...'</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[2]]></step_number>
+<actions><![CDATA[
+<p>Руководитель видит, что объект битый и нажимает на 'Подробнее'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>Открыто сообщение об ошибке. Текст ошибки содержит информацию...</p>
+<p style="margin-left: 40px;">ERROR Message</p>
+<p style="margin-left: 40px;">HTTP status code</p>
+<p style="margin-left: 40px;">Stack trace</p>
+<p>Из текста понятно, что ошибка вызвана попыткой системы манипулировать битым объектом</p>
+<p>В тексте сообщения есть OID объекта</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[3]]></step_number>
+<actions><![CDATA[
+<p>Руководитель скачивает файл c текстом ошибки и передает его инженеру технической поддержки (письмом)</p>
+<p style="margin-left: 40px;">// Кнопка 'Скачать' в окне 'Детали ошибки' скачивает содержимое в файл с именем в формате: 'error_yyyy-mm-dd_hh-mm-ss.log'</p>
+]]></actions>
+<expectedresults><![CDATA[
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[4]]></step_number>
+<actions><![CDATA[
+<p>Инженер получает файл с ошибкой и из текста  понимает, что ошибка вызвана попыткой системы манипулировать битым объектом</p>
+]]></actions>
+<expectedresults><![CDATA[
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[5]]></step_number>
+<actions><![CDATA[
+<p>Инженер извлекает из текста ошибки OID битого объекта</p>
+]]></actions>
+<expectedresults><![CDATA[
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[6]]></step_number>
+<actions><![CDATA[
+<p>Инженер идёт на техническую страницу 'Объекты репозитория' и ищет объект по его OID</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>Результатом поиска является только один объект, который выведен в виде одной строки</p>
+<p>Строка выделена красным цветом и содержит иконку 'восклицательный знак'</p>
+<p>У объекта заполнены все поля:</p>
+<p style="margin-left: 40px;">'Тип объект'</p>
+<p style="margin-left: 40px;">'Идентификатор'</p>
+<p style="margin-left: 40px;">'Название'</p>
+<p style="margin-left: 40px;">'Отображаемое название'</p>
+<p style="margin-left: 40px;">'Размер'</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[7]]></step_number>
+<actions><![CDATA[
+<p>Инженер кликом по строке таблицы открывает объект в 'Редакторе XML'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>Вверху страницы отображён Лэйбл 'Неисправный объект'</p>
+<p style="margin-left: 40px;">при щелчке на лэйбл выводится описание ошибки с подробностями: ERROR Message, HTTP status code, Stack trace</p>
+<p>Флаг 'Заменить объект'</p>
+<p style="margin-left: 40px;">включён</p>
+<p style="margin-left: 40px;">НЕактивен</p>
+<p>Флаг 'Сохранить без пересчёта'</p>
+<p style="margin-left: 40px;">включён</p>
+<p style="margin-left: 40px;">НЕактивен</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[8]]></step_number>
+<actions><![CDATA[
+<p>Инженер чинит XML битого объекта и сохраняет внесенные изменения</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>Объект сохранён</p>
+<p>На форме исчез лэйбл 'Неисправный объект'</p>
+<p>Флаг 'Заменить объект'</p>
+<p style="margin-left: 40px;">включён</p>
+<p style="margin-left: 40px;">активен</p>
+<p>Флаг 'Сохранить без пересчёта'</p>
+<p style="margin-left: 40px;">включён</p>
+<p style="margin-left: 40px;">активен</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[9]]></step_number>
+<actions><![CDATA[
+<p>Инженер закрывает форму 'Редактирование XML' (для этого жмёт 'Отмена')</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>В таблице на странице 'Объекты репозитория' строка объекта перерисована - сняты признаки 'битого объекта'</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[10]]></step_number>
+<actions><![CDATA[
+<p>Инженер сообщает руководителю, что объект был починен</p>
+]]></actions>
+<expectedresults><![CDATA[
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[11]]></step_number>
+<actions><![CDATA[
+<p>Руководитель заходит в список пользователей и ищет Иванова Ивана</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>Найден один объект</p>
+<p>Строка объекта отображается со всеми атрибутами</p>
+<p>С объекта сняты признаки 'битого объекта'</p>
+<p>Можно открыть карточку пользователя</p>
+]]></expectedresults>
+</step>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testsuite id="" name="Битые объекты в стандартных списках">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="[БО] Отображение битого объекта в стандартном списке (Список пользователей)">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Битые объекты в стандартных списках</p></span>
+<p>ТК-01: [БО] Отображение битого объекта в стандартном списке (Список пользователей)</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Убедиться, что битый объект в списках <strong>отображается в виде строки с ошибкой</strong>, которая <strong>содержит иконку</strong> (восклицательный знак), <strong>текст</strong> 'Не удалось отобразить информацию о пользователе&gt;.' и <strong>кнопку-ссылку</strong> 'Подробнее...'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] Детали ошибки - модальное окно с кнопками 'Скачать' и 'Закрыть' (закрывает окно)">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Битые объекты в стандартных списках</p></span>
+<p>ТК-02: [БО] Детали ошибки открываются в модальном окне, которое содержит кнопки 'Закрыть' и 'Скачать'. Кнопка 'Закрыть' закрывает окно</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] Работа кнопки 'Скачать' в окне 'Детали ошибки'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Битые объекты в стандартных списках</p></span>
+<p>ТК-03: [БО] Кнопка 'Скачать' в окне 'Детали ошибки' скачивает содержимое в файл с именем в формате: 'error_yyyy-mm-dd_hh-mm-ss.log'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] После починки объекта, в стандартном списке он начинает отображаться без признаков битого">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Битые объекты в стандартных списках</p></span>
+<p>ТК-04: [БО] После того как битый объект починен, в стандартном списке он начинает отображаться без признаков битого объекта</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] Отображение списка пользователей при выборе согласующего, когда один из пользователей - битый">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Битые объекты в стандартных списках</p></span>
+<p>ТК-05: [БО] Отображение списка пользователей при выборе согласующего в заявке, когда один из пользователей - битый</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Объекты репозитория">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testsuite id="" name="Таблица (оформление)">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Отображение строк с объектами (в т.ч. и битыми) в таблице">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Таблица (оформление)</p></span>
+<p>ТК-06: <strong>Отображение строк</strong> с объектами (в т.ч. и битыми) в таблице</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Проверяем, что:</p>
+<p style="margin-left: 40px;">- строки с объектами являются кликабельными</p>
+<p style="margin-left: 40px;">- при наведении курсора на строку с объектом цвет текста меняется</p>
+<p style="margin-left: 40px;">- строка с битым объектом красного цвета</p>
+<p style="margin-left: 40px;">- при наведении на строку с битым объектом tooltip = 'Неисправный объект'</p>
+<p style="margin-left: 40px;">- пустое значение в ячейке отображается как '-'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Отображение столбцов таблицы, когда в фильтре выбраны ресурсные объекты">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Таблица (оформление)</p></span>
+<p>ТК-07: <strong>Отображение столбцов</strong> таблицы, когда в фильтре выбраны <strong>ресурсные объекты</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Проверить, что отображаются столбцы:</p>
+<p style="margin-left: 80px;">'Название ИС'</p>
+<p style="margin-left: 120px;">Например <strong>'Active Directory'</strong></p>
+<p style="margin-left: 120px;">Сортировки нет</p>
+<p style="margin-left: 80px;">'Идентификатор'</p>
+<p style="margin-left: 120px;">Например <strong>'69fbb193-5d61-4773-adca-363a845b9168'</strong></p>
+<p style="margin-left: 120px;">Сортировки нет</p>
+<p style="margin-left: 80px;">'Название'</p>
+<p style="margin-left: 120px;">Например <strong>'CN=ad1,OU=inrights,DC=inrights,DC=ru'</strong></p>
+<p style="margin-left: 120px;">Есть сортировка</p>
+<p style="margin-left: 80px;">'Object Class'</p>
+<p style="margin-left: 120px;">Например <strong>'AccountObjectClass'</strong></p>
+<p style="margin-left: 120px;">Есть сортировка</p>
+<p style="margin-left: 80px;">'kind'</p>
+<p style="margin-left: 120px;">Например <strong>'account'</strong></p>
+<p style="margin-left: 120px;">Есть сортировка</p>
+<p style="margin-left: 80px;">'intent'</p>
+<p style="margin-left: 120px;">Например <strong>'default'</strong></p>
+<p style="margin-left: 120px;">Есть сортировка</p>
+<p style="margin-left: 80px;">'Размер'</p>
+<p style="margin-left: 120px;">Например <strong>'1,2 МБ'</strong></p>
+<p style="margin-left: 120px;">размер файла округляем до:</p>
+<p style="margin-left: 160px;">Б и КБ - до целого</p>
+<p style="margin-left: 160px;">МБ и ГБ - до десятых</p>
+<p style="margin-left: 120px;">Есть сортировка</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Отображение столбцов таблицы, когда в фильтре выбраны НЕ ресурсные объекты">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Таблица (оформление)</p></span>
+<p>ТК-08: <strong>Отображение столбцов</strong> таблицы, когда в фильтре выбраны <strong>НЕ ресурсные объекты</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Проверить, что отображаются столбцы:</p>
+<p style="margin-left: 80px;">'Тип объекта'</p>
+<p style="margin-left: 120px;">Например <strong>'UserType'</strong></p>
+<p style="margin-left: 120px;">Сортировки нет</p>
+<p style="margin-left: 80px;">'Идентификатор'</p>
+<p style="margin-left: 120px;">Например <strong>'69fbb193-5d61-4773-adca-363a845b9168'</strong></p>
+<p style="margin-left: 120px;">Сортировки нет</p>
+<p style="margin-left: 80px;">'Название'</p>
+<p style="margin-left: 120px;">Например <strong>'i.i.ivanov'</strong></p>
+<p style="margin-left: 160px;">(Name)</p>
+<p style="margin-left: 120px;">Есть сортировка</p>
+<p style="margin-left: 80px;">'Отображаемое название'</p>
+<p style="margin-left: 120px;">Например <strong>'Иванов Иван Иванович'</strong></p>
+<p style="margin-left: 160px;">(displayName, fullname для user)</p>
+<p style="margin-left: 120px;">Есть сортировка</p>
+<p style="margin-left: 80px;">'Размер'</p>
+<p style="margin-left: 120px;">Например <strong>'100 КБ'</strong></p>
+<p style="margin-left: 160px;">размер файла округляем до:</p>
+<p style="margin-left: 200px;">Б и КБ - до целого</p>
+<p style="margin-left: 200px;">МБ и ГБ - до десятых</p>
+<p style="margin-left: 120px;">Есть сортировка</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Поведение кнопки 'Три точки'">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Кнопка 'Три точки' всегда активна">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Поведение кнопки 'Три точки'</p></span>
+<p>ТК-09: Кнопка 'Три точки' <strong>всегда активна</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="При нажатии на кнопку отображается список действий (перечень см. в описании теста)">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Поведение кнопки 'Три точки'</p></span>
+<p>ТК-10: При нажатии на кнопку отображается <strong>список действий</strong>: 'Реконсилировать', 'Скачать', 'Скачать все найденные', 'Удалить', 'Удалить все найденные'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Если НЕ выбрано ни одного объекта, то кнопки 'Реконсилировать', 'Скачать', 'Удалить' НЕ активны">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Поведение кнопки 'Три точки'</p></span>
+<p>ТК-11: Если <strong>НЕ выбрано ни одного</strong> объекта, то кнопки 'Реконсилировать', 'Скачать', 'Удалить' <strong>НЕ активны</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Если найден хотя бы один объект, то кнопки 'Скачать все найденные' и 'Удалить все найденные' активны">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Поведение кнопки 'Три точки'</p></span>
+<p>ТК-12: Если <strong>найден хотя бы один</strong> объект, то кнопки 'Скачать все найденные' и 'Удалить все найденные' </strong>активны</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Если НЕ найдены объекты, то кнопки 'Скачать все найденные' и 'Удалить все найденные' НЕ активны">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Поведение кнопки 'Три точки'</p></span>
+<p>ТК-13: Если <strong>НЕ найден ни один</strong> объект, то кнопки 'Скачать все найденные' и 'Удалить все найденные' </strong>НЕ активны</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Действия над объектами">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testsuite id="" name="Скачивание объектов">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Удачное сохранение (скачивание) нескольких объектов (среди них есть и битые, и не битые)">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Скачивание объектов</p></span>
+<p>ТК-14: <strong>Удачное сохранение</strong> (скачивание) <strong>нескольких объектов</strong> (среди них есть и битые, и не битые)</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">В таблице объектов <strong>выбрать</strong> несколько битых и несколько не битых объектов</p>
+<p style="margin-left: 40px;">Перейти в меню <strong>'Три точки'</strong> и выбрать действие <strong>'Скачать'</strong></p>
+<p style="margin-left: 40px;">Открыто стандартное окно для выбора <strong>пути сохранения</strong></p>
+<p style="margin-left: 40px;">Предлагаемое название xml-файла <strong>'RepositoryObjects_&lt;objectType__дд.мм.гггг чч:мм&gt;'</strong></p>
+<p style="margin-left: 40px;">Выбрать путь сохранения и продолжить</p>
+<p style="margin-left: 40px;">Система сохранила <strong>выбранные</strong> объекты в один xml-файл</p>
+<p style="margin-left: 40px;">Выведено сообщение <strong>'Файл</strong> _&lt;имя файла&gt;_ </strong>успешно сохранен'</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Удачное сохранение (скачивание) ОДНОГО объекта">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Скачивание объектов</p></span>
+<p>ТК-15: <strong>Удачное сохранение</strong> (скачивание) <strong>ОДНОГО объекта</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">В таблице объектов <strong>выбрать</strong> один объект</p>
+<p style="margin-left: 40px;">Перейти в меню <strong>'Три точки'</strong> и выбрать действие <strong>'Скачать'</strong></p>
+<p style="margin-left: 40px;">Открыто стандартное окно для выбора <strong>пути сохранения</strong></p>
+<p style="margin-left: 40px;">Предлагаемое название xml-файла <strong>'objectType__name'</strong></p>
+<p style="margin-left: 40px;">Выбрать путь сохранения и продолжить</p>
+<p style="margin-left: 40px;">Система сохранила <strong>выбранный</strong> объект в xml-файл</p>
+<p style="margin-left: 40px;">Выведено сообщение <strong>'Файл</strong> _&lt;имя файла&gt;_ </strong>успешно сохранен'</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="По кнопке 'Скачать все найденные' скачиваются ВСЕ найденные объекты">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Скачивание объектов</p></span>
+<p>ТК-16: По кнопке 'Скачать все найденные' скачиваются <strong>ВСЕ найденные</strong> объекты</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Импорт (загрузка)">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Удачный импорт (перезаписать) одного пользователя - совпадают login-ы">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Импорт (загрузка)</p></span>
+<p>ТК-17: <strong>Удачный импорт</strong> (загрузка) одного НЕ битого пользователя, когда <strong>проставлен флаг</strong> 'Перезаписать существующие объекты', в загружаемом объекте <strong>не прописан OID</strong>, но <strong>login</strong> загружаемого пользователя и <strong>login</strong> пользователя в системе <strong>совпадают</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Удачный импорт (добавить новые) нескольких пользователей - OID-ы и login-ы отсутствуют в системе">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Импорт (загрузка)</p></span>
+<p>ТК-18: <strong>Удачный импорт</strong> (загрузка) нескольких пользователей из одного файла XML с <strong>НЕ проставленным</strong> флагом 'Перезаписать существующие объекты', когда <strong>OID и login</strong> прописанные в XML загружаемых объектов <strong>отсутствуют в системе</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="НЕудачный импорт (добавить новые) одного пользователя - совпадают login-ы">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Импорт (загрузка)</p></span>
+<p>ТК-19: <strong>НЕудачный импорт</strong> (загрузка) одного НЕ битого пользователя, когда <strong>НЕпроставлен флаг</strong> 'Перезаписать существующие объекты', в загружаемом объекте <strong>не прописан OID</strong>, но <strong>login</strong> загружаемого пользователя и <strong>login</strong> пользователя в системе <strong>совпадают</strong>.</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] НЕудачный импорт 7 пользователей (из 10) - четвертый загружаемый пользователь битый">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Импорт (загрузка)</p></span>
+<p>ТК-20: [БО] <strong>НЕудачный импорт</strong> (загрузка) 7 пользователей (из 10) из одного файла XML с <strong>проставленным флагом</strong> 'Перезаписать существующие объекты', потому что <strong>четвертый</strong> загружаемый пользователь <strong>битый</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="НЕудачный импорт (добавить новые) нескольких пользователей - совпадают OID-ы">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Импорт (загрузка)</p></span>
+<p>ТК-21: <strong>НЕудачный</strong> импорт (загрузка) нескольких пользователей из одного файла XML с <strong>НЕ проставленным флагом</strong> 'Перезаписать существующие объекты', потому что <strong>OID</strong> <strong>первого пользователя</strong> из загружаемого файла <strong>совпадает с OID</strong> пользователя в системе</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="НЕудачный импорт 100 пользователей при обрыве интернет-соединения">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Импорт (загрузка)</p></span>
+<p>ТК-22: <strong>НЕудачный</strong> импорт (загрузка) 100 пользователей из одного файла XML с <strong>проставленным флагом</strong> 'Перезаписать существующие объекты' при обрыве интернет-соединения</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Реконсиляция">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="При нажатии 'Реконсиляция' Система запускает реконсиляцию выбранного объекта">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Реконсиляция</p></span>
+<p>ТК-23: <strong>При нажатии</strong> 'Реконсиляция' <strong>Система запускает</strong> реконсиляцию выбранного объекта</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Была ли запущена реконсиляция - можно посмотреть в логах</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] Кнопка 'Реконсилировать' НЕдоступна если в таблице выбран битый объект">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Реконсиляция</p></span>
+<p>ТК-24: [БО] Кнопка 'Реконсилировать' <strong>НЕдоступна если</strong> в таблице выбран <strong>битый объект</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Кнопка 'Реконсилировать' НЕдоступна если в таблице выбрано несколько объектов">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Реконсиляция</p></span>
+<p>ТК-25: Кнопка 'Реконсилировать' <strong>НЕдоступна если</strong> в таблице выбрано <strong>несколько объектов</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Удаление объектов">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Удачное удаление нескольких НЕбитых объектов, которые НЕ имеют связей на уровне БД">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Удаление объектов</p></span>
+<p>ТК-26: <strong>Удачное удаление</strong> нескольких НЕбитых объектов, которые <strong>НЕ имеют связей</strong> на уровне <strong>БД</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">ПУ:</p>
+<p style="margin-left: 80px;">несколько НЕ битый объектов без связи на уровне БД</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+<step><step_number><![CDATA[1]]></step_number>
+<actions><![CDATA[
+<p>В таблице объектов выбрать (проставить чек-бокс) несколько объектов, которые не имеют связей на уровне БД</p>
+]]></actions>
+<expectedresults><![CDATA[
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[2]]></step_number>
+<actions><![CDATA[
+<p>Перейти в меню (три точки) и выбрать действие 'Удалить'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>открылся диалог подтверждения действия с текстом: 'Выбранные объекты будут удалены. Вы уверены, что хотите продолжить?'</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[3]]></step_number>
+<actions><![CDATA[
+<p>Выбрать 'Да, продолжить'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>открылось стандартное информационное сообщение с текстом 'Объекты успешно удалены'</p>
+<p>удаленные объекты не выводятся в таблице на странице 'Объекты репозитория'</p>
+]]></expectedresults>
+</step>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Диалог подтверждения удаления объектов. При нажатии 'Отменить' - объекты НЕ удаляются">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Удаление объектов</p></span>
+<p>ТК-27: Диалог подтверждения удаления объектов. При нажатии '</strong>Отменить</strong>' - объекты <strong>НЕ удаляются</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">ПУ:</p>
+<p style="margin-left: 80px;">несколько НЕ битых объектов</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+<step><step_number><![CDATA[1]]></step_number>
+<actions><![CDATA[
+<p>В таблице объектов выбрать (проставить чек-бокс) несколько объектов, которые не имеют связей на уровне БД</p>
+]]></actions>
+<expectedresults><![CDATA[
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[2]]></step_number>
+<actions><![CDATA[
+<p>Перейти в меню (три точки) и выбрать действие 'Удалить'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>открылся диалог подтверждения действия с текстом: 'Выбранные объекты будут удалены. Вы уверены, что хотите продолжить?'</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[3]]></step_number>
+<actions><![CDATA[
+<p>Выбрать 'Отменить'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>окно подтверждения действия закрыто</p>
+<p>выбранные объекты не удалены</p>
+]]></expectedresults>
+</step>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] Система НЕ даёт удалить битый объект">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Удаление объектов</p></span>
+<p>ТК-28: [БО] Система <strong>НЕ даёт удалить</strong> битый объект</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">ПУ:</p>
+<p style="margin-left: 80px;">хотя бы 1 битый объект</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+<step><step_number><![CDATA[1]]></step_number>
+<actions><![CDATA[
+<p>В таблице объектов выбрать (проставить чек-бокс) для битого объекта</p>
+]]></actions>
+<expectedresults><![CDATA[
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[2]]></step_number>
+<actions><![CDATA[
+<p>Перейти в меню (три точки) и выбрать действие 'Удалить'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>открылся диалог подтверждения действия с текстом: 'Выбранные объекты будут удалены. Вы уверены, что хотите продолжить?'</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[3]]></step_number>
+<actions><![CDATA[
+<p>Выбрать 'Да, продолжить'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>Возникла ошибка 'Не удалось удалить объект' и техническими подробностями в разделе '_Подробнее_'</p>
+<p>выбранный объект не удален</p>
+]]></expectedresults>
+</step>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="По кнопке 'Удалить все найденные' удаляются ВСЕ найденные объекты">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Удаление объектов</p></span>
+<p>ТК-29: По кнопке 'Удалить все найденные' удаляются <strong>ВСЕ найденные</strong> объекты</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] Кнопка 'Удалить все найденные'. Частичное удаление найденных объектов. Один объект - битый">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Удаление объектов</p></span>
+<p>ТК-30: [БО] Кнопка 'Удалить все найденные'. <strong>Частичное удаление</strong> найденных объектов. Ситуация, когда <strong>один из</strong> объектов - <strong>битый</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">// Предположительно, Система споткнувшись на битом объекте прекратит процесс удаления объектов</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="НЕудачное удаление нескольких НЕбитых объектов, которые имеют связей на уровне БД">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Действия над объектами -&gt; Удаление объектов</p></span>
+<p>ТК-31: <strong>НЕудачное удаление</strong> нескольких НЕбитых объектов, которые <strong>имеют связей</strong> на уровне <strong>БД</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">ПУ:</p>
+<p style="margin-left: 80px;">несколько НЕ битый объектов со связями на уровне БД</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+<step><step_number><![CDATA[1]]></step_number>
+<actions><![CDATA[
+<p>В таблице объектов выбрать (проставить чек-бокс) несколько объектов, которые имеют связи на уровне БД</p>
+]]></actions>
+<expectedresults><![CDATA[
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[2]]></step_number>
+<actions><![CDATA[
+<p>Перейти в меню (три точки) и выбрать действие 'Удалить'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>открылся диалог подтверждения действия с текстом: 'Выбранные объекты будут удалены. Вы уверены, что хотите продолжить?'</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[3]]></step_number>
+<actions><![CDATA[
+<p>Выбрать 'Да, продолжить'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>Возникла ошибка 'Не удалось удалить объект' и техническими подробностями в разделе '_Подробнее_'</p>
+<p>выбранные объекты не удалены</p>
+]]></expectedresults>
+</step>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite id="" name="Фильтр и поиск">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Работа фильтра 'Все / Неисправные', когда выбран тип объекта 'ShadowType'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Фильтр и поиск</p></span>
+<p>ТК-32: Работа фильтра <strong>'Все / Неисправные'</strong>, когда выбран тип объекта <strong>'ShadowType'</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;"><strong>todo: Переписать</strong> (сейчас НЕ корректно)</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Общая проверка функции поиска">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Фильтр и поиск</p></span>
+<p>ТК-33: Общая проверка <strong>функции поиска</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">ПУ:</p>
+<p style="margin-left: 80px;">В системе...</p>
+<p style="margin-left: 120px;">1 битый пользователь (Иванов Иван)</p>
+<p style="margin-left: 120px;">2 не битых пользователя (Петр Петров, Александр Александров)</p>
+<p style="margin-left: 120px;">1 битая ИС (AD1)</p>
+<p style="margin-left: 120px;">1 не битая ИС (AD2)</p>
+<p style="margin-left: 80px;">В прошлый раз в конце работы со страницей строка поиска была очищена</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+<step><step_number><![CDATA[1]]></step_number>
+<actions><![CDATA[
+<p>Перейти на страницу 'Объекты репозитория'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>Поисковая строка пустая</p>
+<p>inplace-text для <strong>userType</strong>:  'Поиск по идентификатору, названию и атрибутам объекта  (введите несколько через запятую)'</p>
+<p>inplace-text для все <strong>остальные типы</strong>: 'Поиск по идентификатору и названию объекта  (введите несколько через запятую)'</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[2]]></step_number>
+<actions><![CDATA[
+<p>Выбрать тип объектов <strong>userType</strong></p>
+]]></actions>
+<expectedresults><![CDATA[
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[3]]></step_number>
+<actions><![CDATA[
+<p>В поисковую строку ввести значения для поиска (через запятую): 'Иванов Иван, Петр Петров, Александр Александров' и выполнить поиск</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>в таблице 3 строки с пользователями</p>
+<p>Иванов Иван отображается с признаками 'битого объекта'</p>
+<p>Петр Петров и Александр Александров отображаются без признаков битого объекта</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[4]]></step_number>
+<actions><![CDATA[
+<p>Выбрать тип объектов <strong>resourceType</strong></p>
+]]></actions>
+<expectedresults><![CDATA[
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[5]]></step_number>
+<actions><![CDATA[
+<p>В поисковую строку ввести значения для поиска через запятую 'AD1, AD2'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>в таблице 2 строки с ИС</p>
+<p>AD1 отображается с признаками 'битого объекта'</p>
+<p>AD2 отображается без признаков 'битый объект'</p>
+]]></expectedresults>
+</step>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="В поисковой строке отображается последний введенный запрос, если поиск уже был выполнен ранее">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Фильтр и поиск</p></span>
+<p>ТК-34: В <strong>поисковой строке</strong> отображается <strong>последний введенный запрос</strong>, если поиск уже был выполнен ранее</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Если выбраны: Ресурсный объект, Все ИС, Object Class - выводятся все ресурсные объекты всех типов">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Фильтр и поиск</p></span>
+<p>ТК-35: Если выбран тип объекта 'Ресурсный объект', 'Все ИС' и 'Object Class', то в таблице выводятся <strong>все ресурсные</strong> объекты <strong>всех типов</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Ситуация, когда в таблице выводятся все ресурсные объекты всех типов для выбранной ИС">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Фильтр и поиск</p></span>
+<p>ТК-36: Если выбран тип объекта 'Ресурсный объект', 'Object Class' и конкретная ИС, то в таблице выводятся <strong>все ресурсные</strong> объекты всех типов <strong>для выбранной ИС</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Если НЕ найдено ни одного объекта, то отображается текст: 'Не найдено ни одного объекта'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Фильтр и поиск</p></span>
+<p>ТК-37: <strong>Если</strong> НЕ найдено <strong>ни одного объекта</strong>, то отображается текст: 'Не найдено ни одного объекта'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Работа фильтра 'Все / Неисправные', когда выбран тип объекта 'UserType'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Фильтр и поиск</p></span>
+<p>ТК-38: Работа фильтра <strong>'Все / Неисправные'</strong>, когда выбран тип объекта <strong>'UserType'</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">ПУ:</p>
+<p style="margin-left: 80px;">2 битых пользователя</p>
+<p style="margin-left: 80px;">5 не битых пользователей</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+<step><step_number><![CDATA[1]]></step_number>
+<actions><![CDATA[
+<p>Перейти на техническую страницу 'Объекты репозитория'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>У фильтра 'Все / Неисправные' выбрано 'Все'</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[2]]></step_number>
+<actions><![CDATA[
+<p>Выбрать тип объекта 'UserType'. Применить фильтр 'Все'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>в таблице 7 строк с пользователями</p>
+]]></expectedresults>
+</step>
+<step><step_number><![CDATA[3]]></step_number>
+<actions><![CDATA[
+<p>Применить фильтр 'Неисправные'</p>
+]]></actions>
+<expectedresults><![CDATA[
+<p>в таблице 2 строки с битыми пользователями</p>
+]]></expectedresults>
+</step>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="todo: Написать тест, когда выбран конкретный 'Object Class'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Фильтр и поиск</p></span>
+<p>ТК-39: todo: Написать тест, когда выбран <strong>конкретный 'Object Class'</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Прочее">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="В истории браузеров отображается страница 'Объекты репозитория'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Объекты репозитория -&gt; Прочее</p></span>
+<p>ТК-40: <strong>В истории браузеров</strong> отображается страница 'Объекты репозитория'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite id="" name="Редактор XML">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testsuite id="" name="Отображение формы">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Отображение валидного объекта">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Отображение формы</p></span>
+<p>ТК-41: Отображение <strong>валидного</strong> объекта</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Открыть в редакторе валидного пользователя 'i.i.ivanov'</p>
+<p style="margin-left: 40px;">ОР:</p>
+<p style="margin-left: 80px;">Шапка: 'Редактирование объекта i.i.ivanov'</p>
+<p style="margin-left: 80px;">В области редактирования отображён XML объекта</p>
+<p style="margin-left: 80px;">Присутствуют кнопки:</p>
+<p style="margin-left: 120px;">кнопка 'Загрузить'</p>
+<p style="margin-left: 120px;">кнопка 'Скачать'</p>
+<p style="margin-left: 120px;">кнопка 'Сбросить изменения' НЕактивна</p>
+<p style="margin-left: 120px;">кнопка 'Сохранить' НЕактивна</p>
+<p style="margin-left: 120px;">кнопка 'Отмена'</p>
+<p style="margin-left: 80px;">Присутствуют флаги:</p>
+<p style="margin-left: 120px;">'Заменить объект'</p>
+<p style="margin-left: 120px;">'Сохранить без пересчёта'</p>
+<p style="margin-left: 40px;">Внести изменения в XML</p>
+<p style="margin-left: 40px;">ОР:</p>
+<p style="margin-left: 80px;">кнопка 'Сбросить изменения' активна</p>
+<p style="margin-left: 80px;">кнопка 'Сохранить' активна</p>
+<p style="margin-left: 40px;">Сбросить изменения</p>
+<p style="margin-left: 40px;">ОР:</p>
+<p style="margin-left: 80px;">кнопка 'Сбросить изменения' НЕактивна</p>
+<p style="margin-left: 80px;">кнопка 'Сохранить' НЕактивна</p>
+<p style="margin-left: 40px;">Загрузить файл XML</p>
+<p style="margin-left: 40px;">ОР:</p>
+<p style="margin-left: 80px;">кнопка 'Сбросить изменения' активна</p>
+<p style="margin-left: 80px;">кнопка 'Сохранить' активна</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Возможности области редактирования">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Отображение формы</p></span>
+<p>ТК-42: <strong>Возможности</strong> области редактирования</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Подсветка синтаксиса XML</p>
+<p style="margin-left: 40px;">Сворачивания / разворачивания тегов</p>
+<p style="margin-left: 40px;">Вертикальный скролл по файлу, если XML выходит за границы окна</p>
+<p style="margin-left: 40px;">Горизонтальный скролл если слишком длинные строки</p>
+<p style="margin-left: 40px;">Поиска по файлу располагается в правом верхнем углу</p>
+<p style="margin-left: 40px;">Область для вывода ошибок в нижней части редактора</p>
+<p style="margin-left: 80px;">(попытаться сохранить НЕвалидный XML)</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Поведение флагов 'Заменить объект' и 'Сохранить без пересчёта'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Отображение формы</p></span>
+<p>ТК-43: <strong>Поведение флагов</strong> 'Заменить объект' и 'Сохранить без пересчёта'</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Проверить варианты из таблицы</p>
+<p style="margin-left: 80px;">…</p>
+<p style="margin-left: 40px;">При наведении курсора на флаги отображается соответствующая подсказка:</p>
+<p style="margin-left: 80px;">tooltip = 'Save in raw mode - будет сохранено без запуска execute changes'</p>
+<p style="margin-left: 80px;">tooltip = 'Overwrite as is - при сохранении xml генерируется событие создания объекта'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] При отображении битого объекта вверху формы отображается красный лейбл 'Неисправный объект'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Отображение формы</p></span>
+<p>ТК-44: [БО] При отображении <strong>битого</strong> объекта вверху формы отображается <strong>красный лейбл</strong> 'Неисправный объект'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] При нажатии на лэйбл 'Неисправный объект' открывается форма с деталями ошибки">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Отображение формы</p></span>
+<p>ТК-45: [БО] При нажатии на лэйбл 'Неисправный объект' открывается <strong>форма с деталями ошибки</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Импорт (загрузка)">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Удачный импорт (загрузка) одного НЕбитого пользователя из файла XML">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Импорт (загрузка)</p></span>
+<p>ТК-46: <strong>Удачный импорт</strong> (загрузка) <strong>одного НЕбитого</strong> пользователя из файла XML</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] Удачный импорт (загрузка) одного битого пользователя из файла XML">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Импорт (загрузка)</p></span>
+<p>ТК-47: [БО] <strong>Удачный импорт</strong> (загрузка) <strong>одного битого</strong> пользователя из файла XML</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="НЕудачный импорт (загрузка) нескольких объектов из одного файла">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Импорт (загрузка)</p></span>
+<p>ТК-48: <strong>НЕудачный импорт</strong> (загрузка) <strong>нескольких объектов</strong> из одного файла</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Должно появиться всплывающее сообщение об ошибке: 'Файл должен содержать описание только одного объекта'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Предупреждение - при попытке загрузить файл, размером больше размера, указанного в настройках">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Импорт (загрузка)</p></span>
+<p>ТК-49: При попытке загрузить файл, <strong>размер</strong> которого <strong>превышает</strong> размер указанный в настройках, Система выдаст <strong>предупреждение</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Должно быть выведено информационное сообщение 'Размер загружаемого файла превышает рекомендуемый. Вы уверены, что хотите продолжить?'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Если на предупреждение о превышении размера файла ответить 'Отмена', то файл НЕ будет загружен">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Импорт (загрузка)</p></span>
+<p>ТК-50: Если <strong>на предупреждение</strong> Системы о превышении размера загружаемого файла ответить '</strong>Отмена</strong>', то файл <strong>НЕ будет загружен</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Сохранение">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="[БО] Удачное сохранение починенного битого объекта (объект сохраняется с заменой и без пересчёта)">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Сохранение</p></span>
+<p>ТК-51: [БО] <strong>Удачное</strong> сохранение <strong>починенного</strong> битого объекта (объект сохраняется <strong>с заменой</strong> и <strong>без пересчёта</strong>)</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Открыть битого пользователя в 'Редакторе XML'. Наверху формы отображается Лэйбл 'Неисправный объект'</p>
+<p style="margin-left: 40px;">Починить XML и сохранить</p>
+<p style="margin-left: 40px;">Лэйбл 'Неисправный объект' НЕ отображается</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Удачное сохранение НЕбитого объекта - БЕЗ замены и БЕЗ пересчёта">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Сохранение</p></span>
+<p>ТК-52: <strong>Удачное</strong> сохранение <strong>НЕбитого</strong> объекта, когда <strong>НЕпроставлен</strong> флаг 'Заменить объект' и <strong>проставлен</strong> флаг 'Сохранить без пересчета'</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Ошибок при сохранении не возникло</p>
+<p style="margin-left: 40px;">Система записала в БД '</strong>дельту</strong>' (только то, что изменилось)</p>
+<p style="margin-left: 40px;">Объект сохранен <strong>без</strong> запуска </strong>execute changes</strong></p>
+<p style="margin-left: 40px;">ДДА: Записать идею Олега, как это можно проверить</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Удачное сохранение НЕбитого объекта - БЕЗ замены и с пересчётом">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Сохранение</p></span>
+<p>ТК-53: <strong>Удачное</strong> сохранение <strong>НЕбитого</strong> объекта, когда <strong>НЕпроставлен</strong> флаг 'Заменить объект' и <strong>НЕпроставлен</strong> флаг 'Сохранить без пересчета'</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Ошибок при сохранении не возникло</p>
+<p style="margin-left: 40px;">Система записала в БД '</strong>дельту</strong>' (только то, что изменилось)</p>
+<p style="margin-left: 40px;">Объект будет скормлен ClockWork-у</p>
+<p style="margin-left: 40px;">ДДА: Записать идею Олега, как это можно проверить</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Удачное сохранение НЕбитого объекта, когда проставлен флаг 'Заменить объект'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Сохранение</p></span>
+<p>ТК-54: <strong>Удачное</strong> сохранение <strong>НЕбитого</strong> объекта, когда <strong>проставлен</strong> флаг 'Заменить объект'</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Ошибок при сохранении не возникло</p>
+<p style="margin-left: 40px;">Объект перезаписывается в БД <strong>без высчитывания</strong> 'дельты'</p>
+<p style="margin-left: 40px;">Сгенерировано событие создания <strong>нового</strong> объекта</p>
+<p style="margin-left: 40px;">Объект сохранился <strong>без</strong> запуска </strong>execute changes</strong></p>
+<p style="margin-left: 40px;">ДДА: Записать идею Олега, как это можно проверить</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="[БО] НЕудачное сохранение битого пользователя, потому что объект НЕ был починен">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Сохранение</p></span>
+<p>ТК-55: [БО] <strong>НЕудачное сохранение</strong> битого пользователя, потому что <strong>объект НЕ</strong> был <strong>починен</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Открыть битого пользователя в 'Редакторе XML'</p>
+<p style="margin-left: 40px;">Внести изменения в XML (НЕ починив его), нажать 'Сохранить'</p>
+<p style="margin-left: 40px;">При сохранении возникла ошибка из текста которой ясно - ошибка связана с тем, что объект битый</p>
+<p style="margin-left: 40px;">Изменения не сохранены</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="НЕудачное сохранение изначально НЕбитого объекта, которому при редактировании сломали XML">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Сохранение</p></span>
+<p>ТК-56: <strong>НЕудачное</strong> сохранение изначально <strong>НЕбитого</strong> объекта, <strong>которому</strong> при редактировании <strong>сломали</strong> XML</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Поведение кнопки 'Сохранить' (когда она активна, а когда она НЕактивна)">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Сохранение</p></span>
+<p>ТК-57: <strong>Поведение кнопки</strong> 'Сохранить' (когда она активна, а когда она НЕактивна)</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Убедиться, что <strong>кнопка</strong> 'Сохранить' <strong>НЕактивна</strong> <strong>при открытии</strong> объекта для редактирования и <strong>после сброса</strong> изменений, а также <strong>активна</strong> <strong>при</strong> первом же <strong>изменении</strong> в XML и <strong>после загрузки</strong> XML из файла</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Сброс изменений">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Работа кнопки 'Сбросить изменения' когда в области редактирования есть несохраненные данные">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Сброс изменений</p></span>
+<p>ТК-58: Работа кнопки <strong>'Сбросить изменения'</strong> когда в области редактирования есть <strong>несохраненные данные</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Открыть объект в редакторе XML</p>
+<p style="margin-left: 40px;">Внести изменения в XML объекта</p>
+<p style="margin-left: 40px;">Нажать на кнопку ''</strong>Сбросить изменения</strong>'', подтвердить действие</p>
+<p style="margin-left: 40px;">Текст XML вернулся в то состоянии, в котором он был при открытии редактора</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Работа кнопки 'Сбросить изменения' после того, когда в область редактирования был загружен файл XML">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Сброс изменений</p></span>
+<p>ТК-59: Работа кнопки <strong>'Сбросить изменения'</strong> после того, когда в область редактирования <strong>был загружен файл XML</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Открыть объект в редакторе XML</p>
+<p style="margin-left: 40px;">Загрузить XML файл</p>
+<p style="margin-left: 40px;">Нажать кнопку 'Сбросить изменения'</p>
+<p style="margin-left: 40px;">Подтвердить действие</p>
+<p style="margin-left: 40px;">Внесенные изменения сброшены</p>
+<p style="margin-left: 40px;">Текст XML вернулся в последнее сохраненное состояние</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Если отменить действие 'Сбросить изменения', то НИЧЕГО не произойдёт">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Сброс изменений</p></span>
+<p>ТК-60: Если <strong>отменить действие</strong> 'Сбросить изменения', то НИЧЕГО <strong>не произойдёт</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Скачивание XML">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Удачное скачивание XML объекта после внесения изменений в XML">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Скачивание XML</p></span>
+<p>ТК-61: <strong>Удачное скачивание XML</strong> объекта <strong>после</strong> внесения <strong>изменений</strong> в XML</p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Открыть объект для редактирования и внести изменения в XML.</p>
+<p style="margin-left: 40px;">Нажать кнопку 'Скачать'</p>
+<p style="margin-left: 40px;">Открыто окно для выбора пути сохранения файла</p>
+<p style="margin-left: 40px;">Предлагаемое название xml-файла: ' &lt; objectType &gt;_&lt; name &gt; '</p>
+<p style="margin-left: 40px;">Ввести название файла и продолжить</p>
+<p style="margin-left: 40px;">Файл сохранен</p>
+<p style="margin-left: 40px;">Открыть скаченный файл в текстовом редакторе</p>
+<p style="margin-left: 40px;">Содержимое файла соответствует содержимому редактора XML</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="НЕудачное скачивание XML объекта, если при подтверждении действия было выбрано 'Отменить'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Скачивание XML</p></span>
+<p>ТК-62: <strong>НЕудачное скачивание XML</strong> объекта, если при подтверждении действия было выбрано 'Отменить'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+<testsuite id="" name="Кнопка 'Отмена'">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Если НЕТ несохранённых данных, то при нажатии 'Отменить' форма закрывается">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Кнопка 'Отмена'</p></span>
+<p>ТК-63: Если <strong>НЕТ не</strong>сохранённых данных, то при нажатии 'Отменить' форма закрывается</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="ЕСТЬ несохранённые данные и НЕ подтверждена отмена - форма закрывается и изменения НЕ сохраняются">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Кнопка 'Отмена'</p></span>
+<p>ТК-64: Если <strong>ЕСТЬ не</strong>сохранённые данные, и при подтверждении отмены выбрано 'Да, продолжить', то форма закрывается и изменённые <strong>данные НЕ сохраняются</strong></p>
+<p>Идея:</p>
+<p style="margin-left: 40px;">Внести изменения в XML объекта и нажать кнопку 'Отменить'</p>
+<p style="margin-left: 40px;">Открыт диалог подтверждения действия с текстом 'Все несохраненные данные будут утеряны. Вы уверены, что хотите продолжить?'</p>
+<p style="margin-left: 40px;">Выбрать 'Да, продолжить'</p>
+<p style="margin-left: 40px;">Окно редактирования закрыто</p>
+<p style="margin-left: 40px;">Данные НЕ сохранены</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="ЕСТЬ несохранённые данные и подтверждена отмена - форма НЕ закрывается">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Редактор XML -&gt; Кнопка 'Отмена'</p></span>
+<p>ТК-65: Если <strong>ЕСТЬ не</strong>сохранённые данные, и при подтверждении отмены выбрано 'Отменить', то форма 'Редактирования XML' <strong>НЕ закрывается</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+</testsuite>
+<testsuite id="" name="Ролевая модель">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Пользователь с ролью 'Просмотр информации для разработчиков' может открыть Объекты репозитория">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Ролевая модель</p></span>
+<p>ТК-66: Пользователь с ролью 'Просмотр информации для разработчиков' <strong>может открыть страницу 'Объекты репозитория'</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Пользователь с ролью 'Просмотр информации для разработчиков' может открыть страницу 'Редактор XML'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Ролевая модель</p></span>
+<p>ТК-67: Пользователь с ролью 'Просмотр информации для разработчиков' <strong>может открыть страницу 'Редактор XML'</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Пользователь без роли 'Просмотр информации для разработчиков' НЕ может открыть Объекты репозитория">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Ролевая модель</p></span>
+<p>ТК-68: Пользователь <strong>без роли</strong> 'Просмотр информации для разработчиков' <strong>НЕ может открыть</strong> страницу 'Объекты репозитория'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Пользователь без роли 'Просмотр информации для разработчиков' НЕ может открыть 'Редактор XML'">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-6655 -&gt; Обработка &lt;/битых&gt; объектов -&gt; Ролевая модель</p></span>
+<p>ТК-69: Пользователь <strong>без роли</strong> 'Просмотр информации для разработчиков' <strong>НЕ может открыть</strong> 'Редактор XML'</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-6655]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
+</testsuite>
