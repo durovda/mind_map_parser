@@ -444,16 +444,16 @@ class Config:
         return False
 
 
-def launch_parser(mind_map_file):
+def launch_parser(mind_map_file, test_cases_file):
     prs = TParser(mind_map_file)
     prs.run()
     ts = prs.getTestSuite()
     lines = []
     ts.addAsXmlTo(lines)
-    TextUtils.printLinesToFile(lines, 'test_cases.xml')
+    TextUtils.printLinesToFile(lines, test_cases_file)
 
 
-def long_names_to_file(mind_map_file):
+def long_names_to_file(mind_map_file, long_names_file):
     prs = TParser(mind_map_file)
     prs.run()
     ts = prs.getTestSuite()
@@ -469,4 +469,4 @@ def long_names_to_file(mind_map_file):
             lines.append('\n')
             count += 1
     lines.append('Длинных имён: ' + str(count))
-    TextUtils.printLinesToFile(lines, 'long_names.txt')
+    TextUtils.printLinesToFile(lines, long_names_file)
