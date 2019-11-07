@@ -1,5 +1,6 @@
 .idea
 venv
+results
 __pycache__
 long_names.txt
 raw_lines.txt
