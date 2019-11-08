@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite id="" name="INRIGHTS-0002 Жирним одно слово - в середине и в конце">
+<node_order><![CDATA[]]></node_order>
+<details><![CDATA[]]></details>
+<testcase internalid="" name="Жирним одно слово и в начале, и в середине, и в конце">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-0002 Жирним одно слово - в середине и в конце</p></span>
+<p>ТК-01: <strong>Жирним</strong> одно слово и в начале, и в <strong>середине</strong>, и в <strong>конце</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-0002]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="&quot;Жирним&quot; и балумся &quot;с кавычками&quot; внутри &quot;выделения&quot;">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-0002 Жирним одно слово - в середине и в конце</p></span>
+<p>ТК-02: <strong>&quot;Жирним&quot;</strong> и балумся <strong>&quot;с кавычками&quot;</strong> внутри <strong>&quot;выделения&quot;</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-0002]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="&quot;Жирним&quot; и балумся &quot;с кавычками&quot; поверх выделения &quot;выделения&quot;">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-0002 Жирним одно слово - в середине и в конце</p></span>
+<p>ТК-03: &quot;<strong>Жирним</strong>&quot; и балумся &quot;<strong>с кавычками</strong>&quot; поверх выделения &quot;<strong>выделения</strong>&quot;</p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-0002]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Жирним несколько слово и в начале, и в середине, и в конце">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-0002 Жирним одно слово - в середине и в конце</p></span>
+<p>ТК-04: <strong>Жирним несколько</strong> слово и в начале, и <strong>в середине</strong>, и <strong>в конце</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-0002]]></value>
+</custom_field></custom_fields>
+</testcase>
+<testcase internalid="" name="Жирним несколько слово и в начале, и в середине, и в конце">
+<node_order><![CDATA[]]></node_order>
+<externalid><![CDATA[]]></externalid>
+<version><![CDATA[]]></version>
+<summary><![CDATA[
+<span style="color:#a9a9a9;"><p>INRIGHTS-0002 Жирним одно слово - в середине и в конце</p></span>
+<p>ТК-05: <strong>Жирним несколько</strong> слово и в начале, и <strong>в середине</strong>, и <strong>в конце</strong></p>
+]]></summary>
+<preconditions><![CDATA[
+]]></preconditions>
+<execution_type><![CDATA[1]]></execution_type>
+<importance><![CDATA[2]]></importance>
+<steps>
+</steps>
+<custom_fields><custom_field>
+<name><![CDATA[UserStory]]></name>
+<value><![CDATA[INRIGHTS-0002]]></value>
+</custom_field></custom_fields>
+</testcase>
+</testsuite>
