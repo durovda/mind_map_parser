@@ -1,6 +1,11 @@
 from enum import Enum
+from text_utils import strToHtmlFormat, getFileAsLines, printLinesToFile
 
 __author__ = 'DDA'
+
+
+def isDebug():
+    return True
 
 
 class NodeType(Enum):
@@ -11,33 +16,33 @@ class NodeType(Enum):
 class Node:
 
     def __init__(self, text):
-        text = text.replace("«", "\'")
-        text = text.replace("»", "\'")
-        text = text.replace("\"", "\'")
-        self.text = text
-        self.level = self.calculateLevel(text)
-        self.text = self.text[self.level:]
-        self.children = []
+        text = text.replace("«", "'")
+        text = text.replace("»", "'")
+        text = text.replace('"', "'")
+        self._text = text
+        self._level = self._calculateLevel(text)
+        self._text = self._text[self._level:]
+        self._children = []
 
     def asText(self):
-        return self.text
+        return self._text
 
     def getLevel(self):
-        return self.level
+        return self._level
 
     def getIndent(self):
-        if self.level == 0:
+        if self._level == 0:
             return ''
-        return '\t' * self.level
+        return '\t' * self._level
 
     def addChild(self, childNode):
-        self.children.append(childNode)
+        self._children.append(childNode)
 
     def getChildren(self):
-        return self.children
+        return self._children
 
     def addNodeAsPatternTo(self, nodes, pattern, level, indent):
-        node = pattern.format(str(level * indent), TextUtils.strToHtmlFormat(self.asText()))
+        node = pattern.format(str(level * indent), strToHtmlFormat(self.asText()))
         nodes.append(node)
         children = self.getChildren()
         if len(children) > 0:
@@ -46,16 +51,16 @@ class Node:
 
     def print(self):
         print(self.getIndent() + self.asText())
-        for child in self.children:
+        for child in self._children:
             child.print()
 
     def addNodesTo(self, lines):
         lines.append(self.getIndent() + self.asText())
-        for child in self.children:
+        for child in self._children:
             child.addNodesTo(lines)
 
     @staticmethod
-    def calculateLevel(text):
+    def _calculateLevel(text):
         count = 0
         for symbol in text:
             if symbol == '\t':
@@ -67,80 +72,97 @@ class Node:
 
 class TParser:
 
-    def __init__(self, fileName):
-        self.fileName = fileName
-        self.nodes = []
-        self.testSuite = None
+    def __init__(self):
+        self._nodes = []
+        self._testSuite = None
 
-    def run(self):
-        megaRawLines = TextUtils.getFileAsLines(self.fileName)
-        rawLines = []
-        rawNodes = []
+    def get_node_tree(self, fileName):
+        megaRawLines = getFileAsLines(fileName)
+        return self._get_node_tree_from_lines(megaRawLines)
+
+    def _get_node_tree_from_lines(self, lines):
+        raw_lines = self._remove_mysterious_initial_symbol(lines)
+        raw_lines = self._replace_spaces_to_tabs(raw_lines)
+        raw_nodes = self._convert_lines_to_linear_list_of_nodes(raw_lines)
+        if isDebug():
+            nodes = []
+            for node in raw_nodes:
+                node.addNodesTo(nodes)
+            printLinesToFile(nodes, 'raw_lines.txt')
+        result_nodes = self._convert_linear_list_to_hierarchy(raw_nodes)
+        if isDebug():
+            nodes_as_lines = []
+            for node in result_nodes:
+                node.addNodesTo(nodes_as_lines)
+            printLinesToFile(nodes_as_lines, 'nodes_as_text.txt')
+        return result_nodes
+
+    @staticmethod
+    def _convert_lines_to_linear_list_of_nodes(raw_lines):
         headlineLevel = 0
-        for line in megaRawLines:
-            if line[:1] not in ('*', '+', ' ', '\t'):
-                line = line[1:]
-            line = line.replace('    ', '\t')
-            rawLines.append(line)
-        for line in rawLines:
+        raw_nodes = []
+        for line in raw_lines:
             lineWithoutTabs = line.replace('\t', '')
             if line[:2] == r'''# ''':
                 newLine = line[2:]
-                rawNodes.append(Node(newLine))
+                raw_nodes.append(Node(newLine))
                 headlineLevel = 1
             elif line[:3] == r'''## ''':
                 newLine = '\t' + line[3:]
-                rawNodes.append(Node(newLine))
+                raw_nodes.append(Node(newLine))
                 headlineLevel = 2
             elif line[:4] == r'''### ''':
                 newLine = '\t\t' + line[4:]
-                rawNodes.append(Node(newLine))
+                raw_nodes.append(Node(newLine))
                 headlineLevel = 3
             elif lineWithoutTabs[:1] == '+':
                 line = line.replace(' + ', '$$$')
                 line = line.replace('+ ', '')
                 line = line.replace('$$$', ' + ')
-                rawNodes.append(Node('\t' * headlineLevel + line))
+                raw_nodes.append(Node('\t' * headlineLevel + line))
             elif lineWithoutTabs[:1] == '*':
                 line = line.replace('**', '$$')
                 line = line.replace(' * ', '$$$')
                 line = line.replace('* ', '')
                 line = line.replace('$$', '**')
                 line = line.replace('$$$', ' * ')
-                rawNodes.append(Node('\t' * headlineLevel + line))
-        if Config.isDebug():
-            nodes = []
-            for node in rawNodes:
-                node.addNodesTo(nodes)
-            TextUtils.printLinesToFile(nodes, 'raw_lines.txt')
-        maxLevel = self.getMaxLevel(rawNodes)
-        for node in rawNodes:
-            if node.getLevel() == 0:
-                self.nodes.append(node)
+                raw_nodes.append(Node('\t' * headlineLevel + line))
+        return raw_nodes
+
+    def _convert_linear_list_to_hierarchy(self, raw_nodes):
+        maxLevel = self._get_max_level(raw_nodes)
+        result_nodes = []
+        for raw_node in raw_nodes:
+            if raw_node.getLevel() == 0:
+                result_nodes.append(raw_node)
         for level in range(maxLevel):
-            self.parsLevel(level, rawNodes)
-        self.testSuite = TestSuite(self.nodes)
-        if Config.isDebug():
-            nodes = []
-            for node in self.nodes:
-                node.addNodesTo(nodes)
-            TextUtils.printLinesToFile(nodes, 'tree.txt')
-
-    def getTestSuite(self):
-        return self.testSuite
+            currentNode = None
+            for node in raw_nodes:
+                if node.getLevel() == level:
+                    currentNode = node
+                elif node.getLevel() == level + 1:
+                    if currentNode is not None:
+                        currentNode.addChild(node)
+        return result_nodes
 
     @staticmethod
-    def parsLevel(level, nodes):
-        currentNode = None
-        for node in nodes:
-            if node.getLevel() == level:
-                currentNode = node
-            elif node.getLevel() == level + 1:
-                if currentNode is not None:
-                    currentNode.addChild(node)
+    def _replace_spaces_to_tabs(mega_raw_lines):
+        raw_lines = []
+        for line in mega_raw_lines:
+            line = line.replace('    ', '\t')
+            raw_lines.append(line)
+        return raw_lines
 
     @staticmethod
-    def getMaxLevel(nodes):
+    # Иногда в самом начале файла присутствует 'таинственный' символ...
+    # Этот метод удаляет его (если он есть)
+    def _remove_mysterious_initial_symbol(raw_lines):
+        if raw_lines[0][:1] not in ('*', '+', ' ', '\t'):
+            raw_lines[0] = raw_lines[0][1:]
+        return raw_lines
+
+    @staticmethod
+    def _get_max_level(nodes):
         maxLevel = 0
         for node in nodes:
             currentLevel = node.getLevel()
@@ -216,7 +238,7 @@ class TSection:
     def getName(self):
         text = self.rawText.replace('*', '')
         text = text.strip()
-        return TextUtils.strToHtmlFormat(text)
+        return strToHtmlFormat(text)
 
     def getStoryNumber(self):
         if self.getName()[:9].lower() == 'inrights-':
@@ -285,7 +307,7 @@ class TestCase:
     def makeName(self):
         text = self.rawText.replace('*', '')
         text = text[7:].strip()
-        return TextUtils.strToHtmlFormat(text)
+        return strToHtmlFormat(text)
 
     def getName(self):
         return self.name
@@ -293,15 +315,15 @@ class TestCase:
     def addDescriptionAsXmlTo(self, nodes):
         if self.parent is not None:
             pattern = r'''<span style="color:#a9a9a9;"><p>{0}</p></span>'''
-            chainOfParents = pattern.format(TextUtils.strToHtmlFormat(self.getParentsAsText()))
+            chainOfParents = pattern.format(strToHtmlFormat(self.getParentsAsText()))
             nodes.append(chainOfParents)
-        fullName = '<p>' + TextUtils.strToHtmlFormat(self.rawText) + '</p>'
+        fullName = '<p>' + strToHtmlFormat(self.rawText) + '</p>'
         nodes.append(fullName)
         if len(self.idea) > 0:
             nodes.append('<p>Идея:</p>')
             pattern = r'''<p style="margin-left: {0}px;">{1}</p>'''
             for node in self.idea:
-                strOfIdea = pattern.format('40', TextUtils.strToHtmlFormat(node.asText()))
+                strOfIdea = pattern.format('40', strToHtmlFormat(node.asText()))
                 nodes.append(strOfIdea)
                 children = node.getChildren()
                 if len(children) > 0:
@@ -312,7 +334,7 @@ class TestCase:
         if len(self.preconditions) > 0:
             pattern = r'''<p style="margin-left: {0}px;">{1}</p>'''
             for node in self.preconditions:
-                nodes.append('<p>' + TextUtils.strToHtmlFormat(node.asText()) + '</p>')
+                nodes.append('<p>' + strToHtmlFormat(node.asText()) + '</p>')
                 children = node.getChildren()
                 if len(children) > 0:
                     for child in children:
@@ -373,7 +395,7 @@ class TestCaseStep:
         pattern = r'''<step><step_number><![CDATA[{0}]]></step_number>'''
         nodes.append(pattern.format(str(self.stepNumber)))
         nodes.append('''<actions><![CDATA[''')
-        nodes.append('<p>' + TextUtils.strToHtmlFormat(self.step.asText()) + '</p>')
+        nodes.append('<p>' + strToHtmlFormat(self.step.asText()) + '</p>')
         pattern = r'''<p style="margin-left: {0}px;">{1}</p>'''
         children = self.step.getChildren()
         if len(children) > 0:
@@ -384,7 +406,7 @@ class TestCaseStep:
         resultNodes = self.result
         if len(resultNodes) > 0:
             for resultNode in resultNodes:
-                nodes.append('<p>' + TextUtils.strToHtmlFormat(resultNode.asText()) + '</p>')
+                nodes.append('<p>' + strToHtmlFormat(resultNode.asText()) + '</p>')
                 children = resultNode.getChildren()
                 if len(children) > 0:
                     for child in children:
@@ -393,70 +415,19 @@ class TestCaseStep:
         nodes.append(r'''</step>''')
 
 
-class TextUtils:
-
-    @staticmethod
-    def strToHtmlFormat(string):
-        string = string.replace(r'''<''', '&lt;')
-        string = string.replace(r'''>''', '&gt;')
-        string = string.replace('«', '\"')
-        string = string.replace('»', '\"')
-        string = string.replace('\"', '&quot;')
-        string = ' ' + string + ' '
-        string = string.replace(' **', ' <strong>')
-        string = string.replace('** ', '</strong> ')
-        string = string.replace('**.', '</strong>.')
-        string = string.replace('**,', '</strong>,')
-        string = string.replace('**', '</strong>')
-        string = string.replace(' </strong>', ' <strong>')
-        string = string.strip()
-        return string
-
-    @staticmethod
-    def printLinesToFile(lines, file_name):
-        file = None
-        try:
-            file = open(file_name, mode='w', encoding='utf8')
-            for line in lines:
-                file.write(line + '\n')
-        finally:
-            if file is not None:
-                file.close()
-            else:
-                print('Файл не найден')
-
-    @staticmethod
-    def getFileAsLines(fileName):
-        lines = []
-        with open(fileName, encoding='utf8') as file:
-            line = file.readline()
-            lines.append(line[:-1])
-            while line:
-                line = file.readline()
-                lines.append(line[:-1])
-        return lines
-
-
-class Config:
-
-    @staticmethod
-    def isDebug():
-        return False
-
-
-def launch_parser(mind_map_file, test_cases_file):
-    prs = TParser(mind_map_file)
-    prs.run()
-    ts = prs.getTestSuite()
+def pars_map_to_xml(mind_map_file, test_cases_file):
+    prs = TParser()
+    node_tree = prs.get_node_tree(mind_map_file)
+    ts = TestSuite(node_tree)
     lines = []
     ts.addAsXmlTo(lines)
-    TextUtils.printLinesToFile(lines, test_cases_file)
+    printLinesToFile(lines, test_cases_file)
 
 
 def long_names_to_file(mind_map_file, long_names_file):
-    prs = TParser(mind_map_file)
-    prs.run()
-    ts = prs.getTestSuite()
+    prs = TParser()
+    node_tree = prs.get_node_tree(mind_map_file)
+    ts = TestSuite(node_tree)
     tks = ts.getTestCases()
     lines = []
     count = 0
@@ -469,4 +440,4 @@ def long_names_to_file(mind_map_file, long_names_file):
             lines.append('\n')
             count += 1
     lines.append('Длинных имён: ' + str(count))
-    TextUtils.printLinesToFile(lines, long_names_file)
+    printLinesToFile(lines, long_names_file)
