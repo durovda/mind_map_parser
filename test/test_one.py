@@ -1,6 +1,5 @@
 import pytest
 import text_utils
-from mind_map_parser import TParser
 
 fixture = [('**01**', '<strong>01</strong>'),
            ('**01**\n', '<strong>01</strong>'),
@@ -32,5 +31,5 @@ def test_01(tpl):
 def test():
     lst = ['01', '   + 3 symbols', '    + 4 symbols']
     exp = ['01', '   + 3 symbols', '\t+ 4 symbols']
-    res = TParser._replace_spaces_to_tabs(lst)
+    res = text_utils.replace_spaces_to_tabs(lst)
     assert exp == res

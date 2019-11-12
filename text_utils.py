@@ -48,3 +48,11 @@ def getFileAsLines(fileName):
             line = file.readline()
             lines.append(line[:-1])
     return lines
+
+
+def replace_spaces_to_tabs(raw_lines):
+    lines = []
+    for line in raw_lines:
+        line = line.replace('    ', '\t')
+        lines.append(line)
+    return lines

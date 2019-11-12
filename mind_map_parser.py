@@ -1,11 +1,7 @@
 from enum import Enum
-from text_utils import strToHtmlFormat, getFileAsLines, printLinesToFile
+from text_utils import strToHtmlFormat, getFileAsLines, printLinesToFile, replace_spaces_to_tabs
 
 __author__ = 'DDA'
-
-
-def isDebug():
-    return True
 
 
 class NodeType(Enum):
@@ -74,27 +70,16 @@ class TParser:
 
     def __init__(self):
         self._nodes = []
-        self._testSuite = None
 
-    def get_node_tree(self, fileName):
-        megaRawLines = getFileAsLines(fileName)
-        return self._get_node_tree_from_lines(megaRawLines)
+    def parse_mind_map_to_node_tree(self, fileName):
+        lines = getFileAsLines(fileName)
+        return self._parse_lines_to_node_tree(lines)
 
-    def _get_node_tree_from_lines(self, lines):
+    def _parse_lines_to_node_tree(self, lines):
         raw_lines = self._remove_mysterious_initial_symbol(lines)
-        raw_lines = self._replace_spaces_to_tabs(raw_lines)
+        raw_lines = replace_spaces_to_tabs(raw_lines)
         raw_nodes = self._convert_lines_to_linear_list_of_nodes(raw_lines)
-        if isDebug():
-            nodes = []
-            for node in raw_nodes:
-                node.addNodesTo(nodes)
-            printLinesToFile(nodes, 'raw_lines.txt')
         result_nodes = self._convert_linear_list_to_hierarchy(raw_nodes)
-        if isDebug():
-            nodes_as_lines = []
-            for node in result_nodes:
-                node.addNodesTo(nodes_as_lines)
-            printLinesToFile(nodes_as_lines, 'nodes_as_text.txt')
         return result_nodes
 
     @staticmethod
@@ -103,19 +88,7 @@ class TParser:
         raw_nodes = []
         for line in raw_lines:
             lineWithoutTabs = line.replace('\t', '')
-            if line[:2] == r'''# ''':
-                newLine = line[2:]
-                raw_nodes.append(Node(newLine))
-                headlineLevel = 1
-            elif line[:3] == r'''## ''':
-                newLine = '\t' + line[3:]
-                raw_nodes.append(Node(newLine))
-                headlineLevel = 2
-            elif line[:4] == r'''### ''':
-                newLine = '\t\t' + line[4:]
-                raw_nodes.append(Node(newLine))
-                headlineLevel = 3
-            elif lineWithoutTabs[:1] == '+':
+            if lineWithoutTabs[:1] == '+':
                 line = line.replace(' + ', '$$$')
                 line = line.replace('+ ', '')
                 line = line.replace('$$$', ' + ')
@@ -146,14 +119,6 @@ class TParser:
         return result_nodes
 
     @staticmethod
-    def _replace_spaces_to_tabs(mega_raw_lines):
-        raw_lines = []
-        for line in mega_raw_lines:
-            line = line.replace('    ', '\t')
-            raw_lines.append(line)
-        return raw_lines
-
-    @staticmethod
     # Иногда в самом начале файла присутствует 'таинственный' символ...
     # Этот метод удаляет его (если он есть)
     def _remove_mysterious_initial_symbol(raw_lines):
@@ -175,7 +140,7 @@ class TestSuite:
 
     def __init__(self, rawNodes=None):
         if rawNodes is None:
-            rawNodes = []
+            self.rawNodes = []
         self.rawNodes = rawNodes
         self.testSuiteElements = []
         self.children = []
@@ -417,7 +382,7 @@ class TestCaseStep:
 
 def pars_map_to_xml(mind_map_file, test_cases_file):
     prs = TParser()
-    node_tree = prs.get_node_tree(mind_map_file)
+    node_tree = prs.parse_mind_map_to_node_tree(mind_map_file)
     ts = TestSuite(node_tree)
     lines = []
     ts.addAsXmlTo(lines)
@@ -426,7 +391,7 @@ def pars_map_to_xml(mind_map_file, test_cases_file):
 
 def long_names_to_file(mind_map_file, long_names_file):
     prs = TParser()
-    node_tree = prs.get_node_tree(mind_map_file)
+    node_tree = prs.parse_mind_map_to_node_tree(mind_map_file)
     ts = TestSuite(node_tree)
     tks = ts.getTestCases()
     lines = []
