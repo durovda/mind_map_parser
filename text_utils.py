@@ -1,3 +1,15 @@
+def is_test_case(text):
+    if text[:2] != 'ТК':
+        if text[:3] != 'СТК':
+            if text[:3] != 'ПТК':
+                return False
+    return True
+
+
+def is_ignored_string(text):
+    if text[:3] == 'ДДА':
+        return True
+    return False
 
 
 def strToHtmlFormat(string):

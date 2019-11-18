@@ -1,5 +1,6 @@
 from enum import Enum
-from text_utils import strToHtmlFormat, getFileAsLines, printLinesToFile, replace_spaces_to_tabs
+from text_utils import strToHtmlFormat, getFileAsLines, printLinesToFile, replace_spaces_to_tabs, is_test_case, \
+    is_ignored_string
 
 __author__ = 'DDA'
 
@@ -146,11 +147,11 @@ class TestSuite:
         self.children = []
         for node in self.rawNodes:
             text = node.asText().strip()
-            if text[:2] == 'ТК':
-                element = TestCase(node.getLevel(), text, node.getChildren(), self.testSuiteElements)
+            if is_test_case(text):
+                element = TestCase(node.getLevel(), text, node.getChildren())
                 self.testSuiteElements.append(element)
                 self.children.append(element)
-            elif text[:3] != 'ДДА':
+            elif not is_ignored_string(text):
                 element = TSection(node.getLevel(), text, node.getChildren(), self.testSuiteElements)
                 self.testSuiteElements.append(element)
                 self.children.append(element)
@@ -189,7 +190,7 @@ class TSection:
         for node in self.rawNodes:
             text = node.asText()
             if text[:2] == 'ТК':
-                element = TestCase(node.getLevel(), text, node.getChildren(), self.testSuiteElements, self)
+                element = TestCase(node.getLevel(), text, node.getChildren(), self)
                 self.testSuiteElements.append(element)
                 self.children.append(element)
             elif text[:3] != 'ДДА':
@@ -230,13 +231,12 @@ class TSection:
 
 class TestCase:
 
-    def __init__(self, level, rawText, rawNodes, testSuiteElements, parent=None):
+    def __init__(self, level, rawText, rawNodes, parent=None):
         self.type = NodeType.TestCase
         self.level = level
         self.rawText = rawText
         self.rawNodes = rawNodes
         self.parent = parent
-        self.testSuiteElements = testSuiteElements
         self.name = self.makeName()
         self.children = []
         self.idea = []
@@ -392,7 +392,7 @@ def pars_map_to_xml(mind_map_file, test_cases_file):
 def long_names_to_file(mind_map_file, long_names_file):
     prs = TParser()
     node_tree = prs.parse_mind_map_to_node_tree(mind_map_file)
-    ts = TestSuite(node_tree)
+    ts = TestSuite(ParsingStrategy(), node_tree)
     tks = ts.getTestCases()
     lines = []
     count = 0
