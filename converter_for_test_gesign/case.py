@@ -10,11 +10,11 @@ class Step:
 
 
 class Case:
-    def __init__(self, name):
+    def __init__(self, name, feature=None, story=None, method="???"):
         self.name = name
-        self.method_name = None
-        self.feature = None
-        self.story = None
+        self.method = method
+        self.feature = feature
+        self.story = story
         self.steps = []
         self.comments = []
 

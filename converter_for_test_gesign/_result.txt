@@ -1,0 +1,52 @@
+
+
+@allure.feature('Первый раздел')
+@allure.story('Бизнес-кейс 1.1')
+@allure.title('Тест 1.1.1')
+def test_1_1_1(app):
+
+    with allure.step('Первый шаг теста 1.1.1'):
+        # Первый комментарий к 1-му шагу теста 1.1.1
+        # Второй комментарий к 1-му шагу теста 1.1.1
+        pass
+
+    with allure.step('Второй шаг теста 1.1.1'):
+        # Комментарий ко 2-му шагу теста 1.1.1
+        pass
+
+
+@allure.feature('Первый раздел')
+@allure.story('Бизнес-кейс 1.1')
+@allure.title('Тест 1.1.2')
+def test_1_1_2(app):
+
+    with allure.step('Единственный шаг теста 1.1.2'):
+        # Комментарий к шагу теста 1.1.2
+        pass
+
+
+@allure.feature('Первый раздел')
+@allure.story('Бизнес-кейс 1.2')
+@allure.title('Тест 1.2.1 (без имени метода)')
+def ???(app):
+
+    with allure.step('Единственный шаг теста 1.2.1'):
+        pass
+
+
+@allure.feature('Второй раздел')
+@allure.story('???')
+@allure.title('Тест без бизнес-кейса')
+def test_without_story(app):
+
+    with allure.step('Единственный шаг теста без бизнес-кейса'):
+        # Комментарий к шагу теста без бизнес-кейса
+        pass
+
+
+@allure.feature('Второй раздел')
+@allure.story('Бизнес-кейс 2.1')
+@allure.title('Тест 2.1.1')
+def test_2_1_1(app):
+    pass
+

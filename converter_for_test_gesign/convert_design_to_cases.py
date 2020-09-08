@@ -54,6 +54,7 @@ def convert_lines_to_cases(lines):
             continue
         if is_feature_name(line):
             current_feature = get_feature_name(line)
+            current_story = "???"
             current_obj_type = "feature"
         elif is_story_name(line):
             current_story = get_story_name(line)
@@ -66,7 +67,7 @@ def convert_lines_to_cases(lines):
             current_case = case
             current_obj_type = "test"
         elif is_method_name(line):
-            current_case.method_name = get_method_name(line)
+            current_case.method = get_method_name(line)
         elif is_step_name(line):
             step = Step(get_step_name(line))
             current_case.steps.append(step)
