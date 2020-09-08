@@ -1,5 +1,5 @@
-from converter_for_test_gesign.case import Case, Step
-from converter_for_test_gesign.convert_design_to_cases import get_file_as_lines, convert_lines_to_cases, \
+from converter_for_test_design.case import Case, Step
+from converter_for_test_design.convert_design_to_cases import get_file_as_lines, convert_lines_to_cases, \
     is_case_name, get_case_name, is_method_name, get_method_name, is_step_name, get_step_name, is_story_name, \
     get_story_name, is_feature_name, get_feature_name
 

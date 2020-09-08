@@ -1,4 +1,4 @@
-from converter_for_test_gesign.case import Case, Step
+from converter_for_test_design.case import Case, Step
 
 
 def is_case_name(line):

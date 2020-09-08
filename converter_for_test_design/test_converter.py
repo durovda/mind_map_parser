@@ -1,5 +1,5 @@
-from converter_for_test_gesign.convert_cases_to_code import convert_cases_to_code
-from converter_for_test_gesign.convert_design_to_cases import convert_lines_to_cases, get_file_as_lines
+from converter_for_test_design.convert_cases_to_code import convert_cases_to_code
+from converter_for_test_design.convert_design_to_cases import convert_lines_to_cases, get_file_as_lines
 
 
 def test_convert_cases_to_code_and_print():

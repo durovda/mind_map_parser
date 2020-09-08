@@ -1,5 +1,5 @@
-from converter_for_test_gesign.case import Case, Step
-from converter_for_test_gesign.convert_cases_to_code import convert_cases_to_code
+from converter_for_test_design.case import Case, Step
+from converter_for_test_design.convert_cases_to_code import convert_cases_to_code
 
 
 def test_convert_one_case():
