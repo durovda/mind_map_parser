@@ -5,7 +5,7 @@ from converter_for_test_gesign.convert_design_to_cases import get_file_as_lines,
 
 
 def test_read_file():
-    lines = get_file_as_lines('file_with_two_lines.txt')
+    lines = get_file_as_lines('test_fixture/file_with_two_lines.txt')
     assert 2 == len(lines)
     assert "ТК - Название теста" == lines[0]
     assert "Метод: Имя метода" == lines[1]
@@ -64,7 +64,7 @@ def test_add_comment_to_step():
 
 
 def test_convert_one_test():
-    lines = get_file_as_lines('simple_test_design.txt')
+    lines = get_file_as_lines('test_fixture/simple_test_design.txt')
     cases = convert_lines_to_cases(lines)
     case = cases[0]
     assert "Первый тест" == case.name
@@ -79,7 +79,7 @@ def test_convert_one_test():
 
 
 def test_convert_test_suite():
-    lines = get_file_as_lines('simple_test_design.txt')
+    lines = get_file_as_lines('test_fixture/simple_test_design.txt')
     cases = convert_lines_to_cases(lines)
     case = cases[0]
     assert "Первый тест" == case.name
@@ -95,7 +95,7 @@ def test_convert_test_suite():
 
 
 def test_structure():
-    lines = get_file_as_lines('suite_structure.txt')
+    lines = get_file_as_lines('test_fixture/suite_structure.txt')
     cases = convert_lines_to_cases(lines)
     case = cases[0]
     assert "Первый тест 1-го бизнес-кейса 1-го раздела" == case.name
@@ -111,10 +111,3 @@ def test_structure():
     case = cases[4]
     assert "Тест бизнес-кейса 2-го раздела" == case.name
     assert "Второй раздел" == case.feature
-
-
-def test_excess_comments_are_ignored():
-    lines = get_file_as_lines('comments.txt')
-    cases = convert_lines_to_cases(lines)
-    case = cases[2]
-    assert 0 == len(case.comments)
