@@ -13,6 +13,8 @@ class Case:
     def __init__(self, name):
         self.name = name
         self.method_name = None
+        self.feature = None
+        self.story = None
         self.steps = []
         self.comments = []
 
