@@ -1,0 +1,16 @@
+input
+push 1
+push 1
+pop tmp
+cmpj 6 15 6
+push 1
+add
+pop tmpp
+push tmpp
+push tmpp
+push tmp
+mul
+pop tmp
+cmpj 6 15 6
+push tmp
+print
